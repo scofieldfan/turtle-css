@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .container {
+        border: 1px solid #000;
+        width: 600px;
+        height: 600px;
+        box-sizing: content-box;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .box {
+        width: 200px;
+        height: 200px;
+        /* border: 1px solid #0f0; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+      }
+      .show {
+        background-color: #f00;
+        /* transition: all 1s ease; */
+      }
+      .box:nth-child(1) {
+        left: 0;
+        top: 0;
+      }
+      .box:nth-child(2) {
+        left: 200px;
+        top: 0;
+      }
+      .box:nth-child(3) {
+        left: 400px;
+        top: 0;
+      }
+      .box:nth-child(4) {
+        left: 400px;
+        top: 200px;
+      }
+      .box:nth-child(5) {
+        left: 400px;
+        top: 400px;
+      }
+      .box:nth-child(6) {
+        left: 200px;
+        top: 400px;
+      }
+      .box:nth-child(7) {
+        left: 0px;
+        top: 400px;
+      }
+      .box:nth-child(8) {
+        left: 0px;
+        top: 200px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box ">box1</div>
+      <div class="box">box2</div>
+      <div class="box">box3</div>
+      <div class="box">box4</div>
+      <div class="box">box5</div>
+      <div class="box">box6</div>
+      <div class="box">box7</div>
+      <div class="box">box8</div>
+    </div>
+    <script src="tween.js/dist/tween.umd.js"></script>
+    <script>
+      /*
+      function start() {
+        let nodes = document.getElementsByClassName("box");
+        move(0, nodes);
+      }
+      function move(i, nodes) {
+        if (i == nodes.length) {
+          i = 0;
+        }
+        let lastI = i - 1;
+        if (lastI === -1) {
+          lastI = nodes.length - 1;
+        }
+        nodes[lastI].classList.remove("show");
+        nodes[i].classList.add("show");
+        setTimeout(() => {
+          move(i + 1, nodes);
+        }, 1000);
+      }
+      start();
+      */
+      // Setup the animation loop.
+      function animate(time) {
+        requestAnimationFrame(animate);
+        TWEEN.update(time);
+      }
+      function removeClass() {
+        let nodes = document.getElementsByClassName("box");
+        for (let i = 0; i < nodes.length; i++) {
+          nodes[i].classList.remove("show");
+        }
+      }
+      function addClass(index) {
+        let nodes = document.getElementsByClassName("box");
+        console.log(index);
+        nodes[index].classList.add("show");
+      }
+      requestAnimationFrame(animate);
+
+      const coords = { x: 0 }; // Start at (0, 0)
+      const tween = new TWEEN.Tween(coords) // Create a new tween that modifies 'coords'.
+        .to({ x: 49 }, 8000) // Move to (300, 200) in 1 second.
+        .easing(TWEEN.Easing.Cubic.Out) // Use an easing function to make the animation smooth.
+        .onUpdate(() => {
+          // Called after tween.js updates 'coords'.
+          // Move 'box' to the position described by 'coords' with a CSS translation.
+          let index = Math.floor(coords.x) % 8;
+          removeClass();
+          addClass(index);
+        })
+        .start(); // Start the tween immediately.
+    </script>
+  </body>
+</html>

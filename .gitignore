@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.vscode
+.awcache
+.cache-loader
+.DS_Store
+# testing
+/coverage
+
+# production
+/build
+/dist
+/tween.js
